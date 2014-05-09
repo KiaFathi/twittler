@@ -6,22 +6,34 @@
   </head>
   <body>
     <script>
-
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-
+      var getTweets = function(){
+        $('.tweets').empty()
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.text('@' + tweet.user + 
+            ': ' + tweet.message + 
+            ". Posted: " + tweet.created_at);
+          $tweet.appendTo('.tweets');
           index -= 1;
         }
-
+      }
+      $(document).ready(function(){
+        $('.getTweets').on('click',function(){
+         getTweets();
+        })
       });
-
     </script>
+    <h1>Twittler</h1>
+    <div>
+      <input type='text' class='sendTweet' value='NOT FUNCTIONING'></input>
+    </div>
+    <div>
+      <button type="button" class="getTweets">Get Latest Tweets</button>
+    </div>
+    <p>Latest Tweets</p>
+    <ul class="tweets">
+    </ul>
   </body>
 </html>
