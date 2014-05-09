@@ -20,18 +20,13 @@
         }
       }
       $(document).ready(function(){
-        $('.getTweets').on('click',function(){
-         getTweets();
-        })
+        getTweets();
+        setInterval(function(){
+          getTweets();
+        }, 5000);
       });
     </script>
     <h1>Twittler</h1>
-    <div>
-      <input type='text' class='sendTweet' value='NOT FUNCTIONING'></input>
-    </div>
-    <div>
-      <button type="button" class="getTweets">Get Latest Tweets</button>
-    </div>
     <p>Latest Tweets</p>
     <ul class="tweets">
     </ul>
