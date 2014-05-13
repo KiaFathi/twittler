@@ -16,6 +16,8 @@
       }
       .user{
         float:left;
+        font-weight: bold;
+        color:purple;
       }
       .msg{
         float:center;
@@ -40,57 +42,70 @@
   </head>
   <boddy>
     <script>
+      //global state for which messages are displayed
       var state = 'all';
-      
-      var getTweets = function(){
+
+      var getTweets = function(args){
         $('.tweets').empty()
+        var chosen_user = arguments[0];
         var index = streams.home.length - 1;
-        while(index >= 0){
+        var counter =0;
+        while(counter <= 15 && index >= 0){ //made counter here because my pages got way too long and it was annoying
           var tweet = streams.home[index];
-          var user = tweet.user.toString();
-          if(state === user || state === 'all'){
+          var user = tweet.user;
+          var timestamp = tweet.created_at
+          if(chosen_user === user || chosen_user === 'all'){
             var $tweet = $("<div class='tweet " +tweet.user + "'></div>");
             $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
-            $tweet.append("<p class='time'>" + "Posted: " + tweet.created_at + '</p>');
+            $tweet.append("<p class='time'>" + "Posted: " + timestamp + '</p>');
             $tweet.append("<p class='msg'>" + tweet.message + '</p>');
             $tweet.appendTo('.tweets');
           }
           index -= 1;
+          counter++;
         }
-      }
-
-      var stateChange = function(){
-        
+        timeTweet(getTweets);
       };
 
-      $(document).ready(function(){
-        getTweets();
-        setInterval(function(){
-          getTweets();
+      var timeTweet = function(callback){
+        return setTimeout(function(){
+          callback(state);
         }, 5000);
-        $('.user').on('click',function(){
-            var clicked = $(this).text();
-          if(state === clicked.slice(1)){
-            state = 'all';
-            console.log(state);
+      }
 
-          }else{
-            state = clicked.slice(1);
-            console.log(state);
-          }
-          getTweets();
-        })
+      var stateChange = function(arg){
+        var clicked = $(arg).text().slice(1);
+        if(state != 'all'){
+          state = 'all';
+          console.log(state);
+        }else{
+          state = clicked;
+          console.log(state);
+        }
+        getTweets(state);
+      };
+
+
+      
+
+      $(document).ready(function(){
+        $('.user').on('click',function(){
+          stateChange(this);
+         });
         $('.main_title').on('click', function(){
           location.reload();
         })
+        getTweets(state);
       });
+
+      
 
     </script>
     <div class='header'>
-      <p class ="main_title">Twittler<p>
+      <p class ="main_title">Twittler</p>
+
     </div>
     <div class='tweets'>
-      <div>Placeholder</div>
     </div>
   </body>
 </html>
