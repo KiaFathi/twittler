@@ -12,8 +12,7 @@
         border-color: blue;
         border-radius: 20px;
         text-align: center;
-        padding: 10px;
-        margin: 10px;
+        margin: auto;
       }
       .user{
         float:left;
@@ -29,22 +28,32 @@
         color:blue;
         font-size:20px;
         font-weight: bold;
-        text-align: left;
+        text-align: left
+        text-decoration:underline;
+      }
+      .main_title{
+        font-size:40px;
+        text-align: center;
+
       }
     </style>
   </head>
-  <body>
+  <boddy>
     <script>
+      var state = 'all';
       var getTweets = function(){
         $('.tweets').empty()
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $("<div class='tweet'></div>");
-          $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
-          $tweet.append("<p class='time'>" + "Posted: " + tweet.created_at + '</p>');
-          $tweet.append("<p class='msg'>" + tweet.message + '</p>');
-          $tweet.appendTo('.tweets');
+          var user = tweet.user;
+          if(user === state || state === 'all'){
+            var $tweet = $("<div class='tweet " +tweet.user + "'></div>");
+            $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
+            $tweet.append("<p class='time'>" + "Posted: " + tweet.created_at + '</p>');
+            $tweet.append("<p class='msg'>" + tweet.message + '</p>');
+            $tweet.appendTo('.tweets');
+          }
           index -= 1;
         }
       }
@@ -53,11 +62,19 @@
         setInterval(function(){
           getTweets();
         }, 5000);
-      });
+        $('.user').on('click',function(){
+          var clicked = $(this).text();
+          if(state != 'all'){
+            state = 'all'
+          }else{
+             state = clicked.slice(1);
+          }
+          getTweets();
+        })
+      })
     </script>
     <div class='header'>
-      <p>Twittler<p>
-      <p>Tweets:<p>
+      <p class ="main_title">Twittler<p>
     </div>
     <div class='tweets'>
       <div>Placeholder</div>
