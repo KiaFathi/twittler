@@ -3,6 +3,17 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <style>
+      .tweet{
+        float: center;
+        border-size: 20px;
+        border-style: solid;
+        border-color: #123;
+        text-align: center;
+        padding: 10px;
+        margin: 20px;
+      }
+    </style>
   </head>
   <body>
     <script>
@@ -11,7 +22,7 @@
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
+          var $tweet = $("<div class='tweet'></div>");
           $tweet.text('@' + tweet.user + 
             ': ' + tweet.message + 
             ". Posted: " + tweet.created_at);
@@ -26,9 +37,12 @@
         }, 5000);
       });
     </script>
-    <h1>Twittler</h1>
-    <p>Latest Tweets</p>
-    <ul class="tweets">
-    </ul>
+    <div class='header'>
+      <h1>Twittler</h1>
+      <h3>Tweets:</h3>
+    </div>
+    <div class='tweets'>
+      <div>Placeholder</div>
+    </div>
   </body>
 </html>
