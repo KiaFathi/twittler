@@ -6,12 +6,30 @@
     <style>
       .tweet{
         float: center;
+        width: 500px;
         border-size: 20px;
         border-style: solid;
-        border-color: #123;
+        border-color: blue;
+        border-radius: 20px;
         text-align: center;
         padding: 10px;
-        margin: 20px;
+        margin: 10px;
+      }
+      .user{
+        float:left;
+      }
+      .msg{
+        float:center;
+        clear: both;
+      }
+      .time{
+        float:right;
+      }
+      .header{
+        color:blue;
+        font-size:20px;
+        font-weight: bold;
+        text-align: left;
       }
     </style>
   </head>
@@ -23,9 +41,9 @@
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $("<div class='tweet'></div>");
-          $tweet.text('@' + tweet.user + 
-            ': ' + tweet.message + 
-            ". Posted: " + tweet.created_at);
+          $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
+          $tweet.append("<p class='time'>" + "Posted: " + tweet.created_at + '</p>');
+          $tweet.append("<p class='msg'>" + tweet.message + '</p>');
           $tweet.appendTo('.tweets');
           index -= 1;
         }
@@ -38,8 +56,8 @@
       });
     </script>
     <div class='header'>
-      <h1>Twittler</h1>
-      <h3>Tweets:</h3>
+      <p>Twittler<p>
+      <p>Tweets:<p>
     </div>
     <div class='tweets'>
       <div>Placeholder</div>
