@@ -41,13 +41,14 @@
   <boddy>
     <script>
       var state = 'all';
+      
       var getTweets = function(){
         $('.tweets').empty()
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var user = tweet.user;
-          if(user === state || state === 'all'){
+          var user = tweet.user.toString();
+          if(state === user || state === 'all'){
             var $tweet = $("<div class='tweet " +tweet.user + "'></div>");
             $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
             $tweet.append("<p class='time'>" + "Posted: " + tweet.created_at + '</p>');
@@ -57,21 +58,30 @@
           index -= 1;
         }
       }
+
+      var stateChange = function(){
+        
+      };
+
       $(document).ready(function(){
         getTweets();
         setInterval(function(){
           getTweets();
         }, 5000);
         $('.user').on('click',function(){
-          var clicked = $(this).text();
-          if(state != 'all'){
-            state = 'all'
+            var clicked = $(this).text();
+          if(state === clicked.slice(1)){
+            state = 'all';
+            console.log(state);
+
           }else{
             state = clicked.slice(1);
+            console.log(state);
           }
           getTweets();
-        })
-      })
+        });
+      });
+
     </script>
     <div class='header'>
       <p class ="main_title">Twittler<p>
