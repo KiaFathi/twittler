@@ -106,7 +106,7 @@
       $(document).ready(function(){
         getTweets(state);
 
-        $('.user').on('click',function(){
+        $('body').on('click', '.user', function(){
           var clicked = $(this).text().slice(1);
           if(state != 'all'){
             state = 'all';
