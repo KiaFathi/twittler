@@ -4,8 +4,14 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <style>
+      body {
+        background-color:gray;
+      }
+
+
       .tweet{
         width: 500px;
+        background-color: white;
         border-size: 20px;
         border-style: solid;
         border-color: blue;
@@ -19,6 +25,8 @@
         float:left;
         display:inline;
         font-weight: bold;
+        margin-top: 10px;
+        margin-left: 5px;
         color:purple;
         padding-right: 10px;
       }
@@ -60,12 +68,6 @@
       //global state for which messages are displayed
       var state = 'all';
 
-      var timeTweet = function(callback){
-        return setTimeout(function(){
-          callback(state);
-        }, 5000);
-      }
-
       var getTweets = function(args){
         $('.tweets').empty()
         if(arguments[0] == undefined){
@@ -76,13 +78,13 @@
         var index = streams.home.length - 1;
         var counter =0;
         while(counter <= 15 && index >= 0){ //made counter here because my pages got way too long and it was annoying
-          var tweet = streams.home[index];
+          var tweet = streams.home[index]; //Issue with the counter is that it limits the number of user spec tweets that show up.
           var user = tweet.user;
           var timestamp = tweet.created_at
           timestamp = timestamp.toString().slice(0,21);
           if(chosen_user === user || chosen_user === 'all'){
             var $tweet = $("<div class='tweet " +tweet.user + "'></div>");
-            $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
+            $tweet.append("<a href='#' class='user'>" + "@" + tweet.user +'</p>');
             $tweet.append("<p class='time'> on " + timestamp + '</p>');
             $tweet.append("<p class='msg'>" + tweet.message + '</p>');
             $tweet.appendTo('.tweets');
@@ -90,9 +92,9 @@
           index -= 1;
           counter++;
         }
-        /*setTimeout(function(){
+        setTimeout(function(){
           getTweets(state);
-        }, 5000);*/
+        }, 5000);
       };
 
       
@@ -118,13 +120,6 @@
           getTweets(state);
         });
 
-        $('.main_title').on('click', function(){
-          location.reload();
-        })
-
-        $('.get').on('click', function(){
-          location.reload();
-        })
       });
 
       
@@ -133,7 +128,6 @@
       <p class ="main_title">Twittler</p>
     </div>
     <div class='sidebar'>
-      <button class='get'>See Latest Tweets</button>
       <div class='info'>Click a username to see their timeline</div>
     </div>
     <div class='tweets'>
