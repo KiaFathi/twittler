@@ -5,37 +5,51 @@
     <script src="data_generator.js"></script>
     <style>
       .tweet{
-        float: center;
         width: 500px;
         border-size: 20px;
         border-style: solid;
         border-color: blue;
         border-radius: 20px;
         text-align: center;
+        float: center;
         margin: auto;
+        clear:both;
       }
       .user{
         float:left;
+        display:inline;
         font-weight: bold;
         color:purple;
+        padding-right: 10px;
       }
       .msg{
+        clear:both;
         float:center;
-        clear: both;
       }
       .time{
+        display:inline;
         float:right;
       }
       .header{
         color:blue;
         font-size:20px;
         font-weight: bold;
-        text-align: left
-        text-decoration:underline;
+        text-align: left;
+        text-decoration: underline;
       }
       .main_title{
+        clear:both;
         font-size:40px;
         text-align: center;
+
+      }
+      .sidebar{
+        margin: auto;
+        float: center;
+        clear: both;
+        border-color: black;
+        border-style: solid;
+        background-color:blue;
 
       }
     </style>
@@ -64,16 +78,20 @@
           var tweet = streams.home[index];
           var user = tweet.user;
           var timestamp = tweet.created_at
+          timestamp = timestamp.toString().slice(0,21);
           if(chosen_user === user || chosen_user === 'all'){
             var $tweet = $("<div class='tweet " +tweet.user + "'></div>");
             $tweet.append("<p class='user'>" + "@" + tweet.user +'</p>');
-            $tweet.append("<p class='time'>" + "Posted: " + timestamp + '</p>');
+            $tweet.append("<p class='time'> on " + timestamp + '</p>');
             $tweet.append("<p class='msg'>" + tweet.message + '</p>');
             $tweet.appendTo('.tweets');
           }
           index -= 1;
           counter++;
         }
+        /*setTimeout(function(){
+          getTweets(state);
+        }, 5000);*/
       };
 
       
@@ -112,9 +130,12 @@
     </script>
     <div class='header'>
       <p class ="main_title">Twittler</p>
-      <button class='get'>See Latest Tweets</button>
+      
     </div>
-    <div class='info'>Click a username to see their timeline</div>
+    <div class='sidebar'>
+      <button class='get'>See Latest Tweets</button>
+      <div class='info'>Click a username to see their timeline</div>
+    </div>
     <div class='tweets'>
     </div>
   </body>
