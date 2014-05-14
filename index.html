@@ -45,9 +45,19 @@
       //global state for which messages are displayed
       var state = 'all';
 
+      var timeTweet = function(callback){
+        return setTimeout(function(){
+          callback(state);
+        }, 5000);
+      }
+
       var getTweets = function(args){
         $('.tweets').empty()
-        var chosen_user = arguments[0];
+        if(arguments[0] == undefined){
+          var chose_user = 'all'
+        }else{
+          var chosen_user = arguments[0];
+        }
         var index = streams.home.length - 1;
         var counter =0;
         while(counter <= 15 && index >= 0){ //made counter here because my pages got way too long and it was annoying
@@ -64,46 +74,47 @@
           index -= 1;
           counter++;
         }
-        timeTweet(getTweets);
       };
 
-      var timeTweet = function(callback){
-        return setTimeout(function(){
-          callback(state);
-        }, 5000);
-      }
+      
 
-      var stateChange = function(arg){
-        var clicked = $(arg).text().slice(1);
-        if(state != 'all'){
-          state = 'all';
-          console.log(state);
-        }else{
-          state = clicked;
-          console.log(state);
-        }
-        getTweets(state);
-      };
+      var stateChange = function(arg){};
+        
 
 
       
 
       $(document).ready(function(){
+        getTweets(state);
+
         $('.user').on('click',function(){
-          stateChange(this);
-         });
+          var clicked = $(this).text().slice(1);
+          if(state != 'all'){
+            state = 'all';
+            console.log(state);
+          }else{
+            state = clicked;
+            console.log(state);
+          }
+          getTweets(state);
+        });
+
         $('.main_title').on('click', function(){
           location.reload();
         })
-        getTweets(state);
+
+        $('.get').on('click', function(){
+          location.reload();
+        })
       });
 
       
-
     </script>
     <div class='header'>
       <p class ="main_title">Twittler</p>
+      <button class='get'>See Latest Tweets</button>
     </div>
+    <div class='info'>Click a username to see their timeline</div>
     <div class='tweets'>
     </div>
   </body>
